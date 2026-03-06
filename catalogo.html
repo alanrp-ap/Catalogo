@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo de Servicios — IA & Visión Artificial</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #f0f2f7;
+  --surface:   #ffffff;
+  --surface2:  #f7f8fc;
+  --border:    #e2e6f0;
+  --border2:   #d0d5e8;
+  --grad-a:    #1a4fff;
+  --grad-b:    #6c2fff;
+  --grad:      linear-gradient(135deg, var(--grad-a), var(--grad-b));
+  --green:     #0d7f5f;
+  --green-bg:  #eaf7f2;
+  --green-bd:  #b2ddd0;
+  --text:      #1c2340;
+  --text-mid:  #4a5580;
+  --text-dim:  #8b96b8;
+  --shadow-sm: 0 2px 8px rgba(26,40,100,0.06);
+  --shadow-md: 0 6px 24px rgba(26,40,100,0.10);
+  --shadow-lg: 0 16px 48px rgba(26,40,100,0.14);
+  --sidebar-w: 240px;
+  --radius:    10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: 'Outfit', sans-serif; font-weight: 400; line-height: 1.7; min-height: 100vh; }
+
+/* SIDEBAR */
+.sidebar { position: fixed; top: 0; left: 0; width: var(--sidebar-w); height: 100vh; background: var(--surface); border-right: 1px solid var(--border); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; z-index: 100; overflow-y: auto; }
+.sidebar-brand { padding: 2rem 1.6rem 1.4rem; border-bottom: 1px solid var(--border); }
+.sidebar-brand-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.5rem; }
+.sidebar-brand-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; line-height: 1.25; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.sidebar-nav { padding: 1.4rem 0.8rem; flex: 1; }
+.nav-section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); padding: 0 0.8rem; margin-bottom: 0.4rem; margin-top: 1.2rem; }
+.nav-section-label:first-child { margin-top: 0; }
+.nav-link { display: flex; align-items: center; gap: 0.55rem; padding: 0.52rem 0.8rem; border-radius: 6px; font-size: 0.82rem; font-weight: 500; color: var(--text-mid); text-decoration: none; transition: all 0.18s ease; width: 100%; text-align: left; line-height: 1.3; }
+.nav-link:hover { background: var(--bg); color: var(--text); }
+.nav-link.active { background: linear-gradient(135deg, rgba(26,79,255,0.1), rgba(108,47,255,0.08)); color: var(--grad-a); }
+.nav-link .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border2); flex-shrink: 0; transition: background 0.2s; }
+.nav-link.active .dot, .nav-link:hover .dot { background: var(--grad-a); }
+.nav-link.prop .dot { background: var(--green-bd); }
+.nav-link.prop.active .dot { background: var(--green); }
+.sidebar-footer { padding: 1.2rem 1.6rem; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--text-dim); letter-spacing: 0.06em; }
+
+/* MAIN */
+.main { margin-left: var(--sidebar-w); min-height: 100vh; }
+.content { max-width: 920px; padding: 3.5rem 3rem 6rem; }
+
+/* SECTION LABEL */
+.sec-label { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grad-a); margin-bottom: 0.8rem; }
+.sec-label::before { content: ''; display: inline-block; width: 20px; height: 2px; background: var(--grad); border-radius: 2px; }
+
+/* HERO */
+#presentacion { padding-bottom: 3rem; border-bottom: 1px solid var(--border); margin-bottom: 3.5rem; }
+.hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 4.5vw, 3.6rem); font-weight: 800; color: var(--text); line-height: 1.12; letter-spacing: -0.02em; margin-bottom: 1.4rem; }
+.hero-title span { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-body { font-size: 1rem; color: var(--text-mid); max-width: 680px; margin-bottom: 2rem; font-weight: 300; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 2.2rem; }
+.chip { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.06em; padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border2); color: var(--text-mid); background: var(--surface); }
+
+/* card images */
+.card-img { width: 100%; border-radius: 8px; object-fit: cover; max-height: 220px; display: block; }
+
+/* SECTION DIVIDER */
+.sec-divider { display: flex; align-items: center; gap: 1rem; margin-bottom: 2.2rem; padding-top: 3rem; }
+.sec-divider h2 { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700; color: var(--text); white-space: nowrap; }
+.sec-divider-line { flex: 1; height: 1px; background: var(--border); }
+.sec-count { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--text-dim); white-space: nowrap; }
+
+/* CARD */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 2.2rem 2.4rem; margin-bottom: 1.8rem; transition: box-shadow 0.3s, transform 0.3s; position: relative; overflow: hidden; }
+.card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+.card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--grad); opacity: 0; transition: opacity 0.3s; }
+.card:hover::before { opacity: 1; }
+.card.proposed::before { background: var(--green); }
+.card.proposed:hover { box-shadow: 0 16px 48px rgba(13,127,95,0.10); }
+.card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.8rem; flex-wrap: wrap; }
+.card-title { font-family: 'Playfair Display', serif; font-size: 1.18rem; font-weight: 700; color: var(--text); line-height: 1.25; flex: 1; }
+.badge { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
+.badge-dev { background: linear-gradient(135deg, rgba(26,79,255,0.12), rgba(108,47,255,0.10)); color: var(--grad-a); border: 1px solid rgba(26,79,255,0.2); }
+.badge-prop { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-bd); }
+.card-desc { font-size: 0.93rem; color: var(--text-mid); margin-bottom: 1.6rem; font-weight: 300; }
+.card-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 2rem; }
+@media(max-width:700px) { .card-grid { grid-template-columns: 1fr; } }
+.block-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grad-a); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem; }
+.block-label::before { content: ''; width: 12px; height: 2px; background: var(--grad); border-radius: 2px; }
+.block-label.green { color: var(--green); }
+.block-label.green::before { background: var(--green); }
+.tech-list { list-style: none; }
+.tech-list li { font-size: 0.86rem; color: var(--text-mid); padding: 0.42rem 0; border-bottom: 1px solid var(--border); display: flex; gap: 0.55rem; align-items: flex-start; font-weight: 300; }
+.tech-list li:last-child { border-bottom: none; }
+.tech-list li::before { content: '→'; font-size: 0.8rem; color: var(--grad-a); flex-shrink: 0; margin-top: 2px; }
+.card.proposed .tech-list li::before { color: var(--green); }
+.app-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.4rem; }
+.app-chip { font-size: 0.72rem; padding: 3px 11px; border-radius: 20px; border: 1px solid var(--border2); color: var(--text-mid); background: var(--surface2); }
+
+/* STEPS */
+.steps-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 1.2rem; margin-top: 0.5rem; }
+@media(max-width:780px) { .steps-grid { grid-template-columns: 1fr 1fr; } }
+.step-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.6rem 1.4rem; box-shadow: var(--shadow-sm); position: relative; transition: box-shadow 0.2s, transform 0.2s; }
+.step-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.step-card::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--grad); border-radius: 0 0 var(--radius) var(--radius); }
+.step-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 800; line-height: 1; margin-bottom: 0.6rem; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; opacity: 0.25; }
+.step-name { font-family: 'Outfit', sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 0.35rem; }
+.step-desc { font-size: 0.78rem; color: var(--text-dim); font-weight: 300; }
+
+/* CONTACT */
+.contact-hero { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-md); overflow: hidden; }
+.contact-top { background: var(--grad); padding: 2.5rem 2.8rem; }
+.contact-top h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; }
+.contact-top p { color: rgba(255,255,255,0.8); font-size: 0.93rem; font-weight: 300; }
+.contact-btns { padding: 2.2rem 2.8rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+.btn { display: inline-flex; align-items: center; gap: 0.55rem; padding: 0.75rem 1.7rem; border-radius: 8px; font-family: 'Outfit', sans-serif; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; }
+.btn-wa { background: #25d366; color: #fff; box-shadow: 0 4px 16px rgba(37,211,102,0.25); }
+.btn-wa:hover { background: #1cb957; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.35); }
+.btn-tel { background: var(--surface); color: var(--grad-a); border: 1.5px solid var(--border2); box-shadow: var(--shadow-sm); }
+.btn-tel:hover { border-color: var(--grad-a); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.btn-mail { background: var(--surface2); color: var(--text-mid); border: 1.5px solid var(--border); box-shadow: var(--shadow-sm); }
+.btn-mail:hover { border-color: var(--border2); transform: translateY(-2px); color: var(--text); }
+
+footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.08em; }
+
+@media(max-width:900px) { .sidebar { display: none; } .main { margin-left: 0; } .content { padding: 2rem 1.5rem 4rem; } }
+
+.fade-in { opacity: 1; transform: none; transition: opacity 0.5s ease, transform 0.5s ease; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-tag">Catálogo de Servicios</div>
+    <div class="sidebar-brand-name">IA & Visión<br>Artificial</div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Inicio</div>
+    <a class="nav-link active" href="#presentacion"><span class="dot"></span>Presentación</a>
+
+    <div class="nav-section-label">Proyectos Desarrollados</div>
+    <a class="nav-link" href="#uav"><span class="dot"></span>Seguimiento UAV</a>
+    <a class="nav-link" href="#tuberias"><span class="dot"></span>Inspección Tuberías</a>
+    <a class="nav-link" href="#epp"><span class="dot"></span>Detección de EPP</a>
+    <a class="nav-link" href="#manufactura"><span class="dot"></span>Inspección Manufactura</a>
+    <a class="nav-link" href="#radar"><span class="dot"></span>Radar Acústico IA</a>
+    <a class="nav-link" href="#torreta"><span class="dot"></span>Torreta de Seguimiento</a>
+    <a class="nav-link" href="#lidar"><span class="dot"></span>Mapeo LiDAR-GPS</a>
+
+    <div class="nav-section-label">Alcances Propuestos</div>
+    <a class="nav-link prop" href="#aforo"><span class="dot"></span>Aforo y Comportamiento</a>
+    <a class="nav-link prop" href="#residuos"><span class="dot"></span>Clasificación Residuos</a>
+    <a class="nav-link prop" href="#fatiga"><span class="dot"></span>Fatiga en Operadores</a>
+    <a class="nav-link prop" href="#inventario"><span class="dot"></span>Inventario Visual</a>
+    <a class="nav-link prop" href="#gemelo"><span class="dot"></span>Gemelo Digital</a>
+
+    <div class="nav-section-label">Proceso</div>
+    <a class="nav-link" href="#modelo"><span class="dot"></span>Modelo de Desarrollo</a>
+    <a class="nav-link" href="#contacto"><span class="dot"></span>Contacto</a>
+  </nav>
+  <div class="sidebar-footer">© 2025 · Ingeniería IA</div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+<div class="content">
+
+  <!-- PRESENTACIÓN -->
+  <section id="presentacion">
+    <div class="sec-label">Catálogo de Servicios · 2025</div>
+    <h1 class="hero-title">Ingeniería en<br><span>Inteligencia Artificial</span><br>y Visión por Computadora</h1>
+    <p class="hero-body">Equipo multidisciplinario de ingenieros en mecatrónica y sistemas computacionales, especializados en el desarrollo de soluciones tecnológicas a medida. Combinamos experiencia en visión artificial, inteligencia artificial embebida, robótica y automatización para resolver problemas reales en industria, seguridad y campo. Diseñamos, prototipamos e implementamos desde la etapa de concepto hasta la entrega funcional.</p>
+    <div class="chips">
+      <span class="chip">Computer Vision</span><span class="chip">Deep Learning</span><span class="chip">Edge AI</span><span class="chip">Embedded Systems</span><span class="chip">Autonomous Systems</span><span class="chip">Signal Processing</span><span class="chip">Sensor Fusion</span><span class="chip">Industrial Inspection</span><span class="chip">Mechatronics</span>
+    </div>
+    <img src="img/equipo.jpg" alt="" style="width:100%;border-radius:8px;object-fit:cover;max-height:220px;display:block;">
+  </section>
+
+  <!-- PROYECTOS -->
+  <div class="sec-divider fade-in">
+    <h2>Proyectos Desarrollados</h2><div class="sec-divider-line"></div><span class="sec-count">07 sistemas</span>
+  </div>
+
+  <!-- 1 UAV -->
+  <div class="card fade-in" id="uav">
+    <div class="card-header"><div class="card-title">Sistema de Seguimiento Autónomo de Objetivos en Plataforma Aérea</div><span class="badge badge-dev">Desarrollado</span></div>
+    <p class="card-desc">Sistema de visión artificial integrado a una plataforma UAV capaz de detectar y seguir objetivos móviles en tiempo real. Todo el procesamiento ocurre a bordo mediante cómputo embebido con aceleración hardware dedicada a inferencia neuronal.</p>
+    <div class="card-grid">
+      <div>
+        <div class="block-label">Técnicas &amp; Arquitecturas</div>
+        <ul class="tech-list">
+          <li>Redes neuronales convolucionales profundas tipo single-stage detector optimizadas para inferencia de baja latencia en hardware embebido con aceleración neuronal dedicada</li>
+          <li>Tracking multi-objeto con filtros probabilísticos de Kalman y métricas de reidentificación entre frames (ReID) para persistencia de objetivo ante oclusiones</li>
+          <li>Estimación de pose y distancia relativa mediante análisis geométrico proyectivo fusionado con datos inerciales (IMU) del vehículo</li>
+          <li>Visual servoing: lazo cerrado PID con retroalimentación visual directa para control de orientación de gimbal en dos ejes</li>
+          <li>Pipeline adaptativo con corrección de exposición dinámica, estabilización digital y compensación de vibración mecánica en vuelo</li>
+          <li>Enlace bidireccional de baja latencia con estación base para telemetría, supervisión en tiempo real y override manual</li>
+        </ul>
+      </div>
+      <div>
+        <div class="block-label">Aplicaciones</div>
+        <div class="app-chips"><span class="app-chip">Vigilancia perimetral</span><span class="app-chip">Monitoreo de activos</span><span class="app-chip">Operaciones de seguridad</span><span class="app-chip">Zonas de difícil acceso</span></div>
+        <div class="block-label" style="margin-top:1rem">Imagen del sistema</div>
+        <img src="img/drone-tracking.png" alt="" style="width:100%;border-radius:8px;object-fit:cover;max-height:220px;display:block;">
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 TUBERÍAS -->
+  <div class="card fade-in" id="tuberias">
+    <div class="card-header"><div class="card-title">Sistema de Inspección Visual en Infraestructura de Tuberías</div><span class="badge badge-dev">Desarrollado</span></div>
+    <p class="card-desc">Plataforma de inspección autónoma o semiautónoma que navega el interior de tuberías aplicando visión artificial para detección temprana de fallas estructurales, con reporte automático y localización geométrica del hallazgo.</p>
+    <div class="card-grid">
+      <div>
+        <div class="block-label">Técnicas &amp; Arquitecturas</div>
+        <ul class="tech-list">
+          <li>CNNs entrenadas con datasets específicos de defectología: corrosión, fisuras longitudinales y transversales, incrustaciones, deformaciones y obstrucciones parciales</li>
+          <li>Segmentación semántica por píxel para delimitar la extensión morfológica de cada anomalía y cuantificar el área afectada con precisión</li>
+          <li>Iluminación activa estructurada para resaltar irregularidades superficiales en condiciones de baja o nula visibilidad ambiental</li>
+          <li>Odometría visual (Visual Odometry) para estimación acumulada de posición dentro de la tubería sin dependencia de señal GPS</li>
+          <li>Reconstrucción 3D parcial del interior mediante fotogrametría y depth estimation para cuantificación volumétrica del daño</li>
+          <li>Reporte automático con clasificación de severidad, coordenadas estimadas del hallazgo y registro fotográfico anotado por clase</li>
+        </ul>
+      </div>
+      <div>
+        <div class="block-label">Aplicaciones</div>
+        <div class="app-chips"><span class="app-chip">Industria petroquímica</span><span class="app-chip">Redes de agua potable</span><span class="app-chip">Plantas de proceso</span><span class="app-chip">Mantenimiento predictivo</span></div>
+        <div class="block-label" style="margin-top:1rem">Imagen del sistema</div>
+        <img src="img/inspeccion-tuberias.jpeg" alt="" style="width:100%;border-radius:8px;object-fit:cover;max-height:220px;display:block;">
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 EPP -->
+  <div class="card fade-in" id="epp">
+    <div class="card-header"><div class="card-title">Sistema de Detección de Equipo de Protección Personal (EPP)</div><span class="badge badge-dev">Desarrollado</span></div>
+    <p class="card-desc">Solución en tiempo real para verificar el uso correcto de casco, chaleco de seguridad y guantes en zonas de trabajo, integrable con infraestructura de cámaras existente. Alertas automáticas y registro auditado de cumplimiento normativo.</p>
+    <div class="card-grid">
+      <div>
+        <div class="block-label">Técnicas &amp; Arquitecturas</div>
+        <ul class="tech-list">
+          <li>Detección simultánea multi-persona y multi-clase de EPP con soporte para oclusión parcial, variaciones de iluminación y entornos dinámicos</li>
+          <li>Pose estimation para contextualizar la posición de cada elemento de protección respecto a la anatomía del trabajador, reduciendo drásticamente falsos positivos</li>
+          <li>Clasificación por región de interés (ROI): presencia/ausencia y uso correcto vs. incorrecto por cada tipo de EPP de forma independiente</li>
+          <li>Procesamiento distribuido sobre múltiples flujos de cámaras con gestión de colas y priorización dinámica de alertas por nivel de riesgo</li>
+          <li>Alertas en tiempo real: notificación visual, señal auditiva y registro de evento con timestamp e imagen recortada como evidencia auditada</li>
+          <li>Dashboard web de cumplimiento con estadísticas por turno y zona, sin almacenamiento de datos biométricos personales</li>
+        </ul>
+      </div>
+      <div>
+        <div class="block-label">Aplicaciones</div>
+        <div class="app-chips"><span class="app-chip">Plantas industriales</span><span class="app-chip">Construcción</span><span class="app-chip">Minería</span><span class="app-chip">Auditoría normativa</span></div>
+        <div class="block-label" style="margin-top:1rem">Imagen del sistema</div>
+        <img src="img/deteccion-epp.avif" alt="" style="width:100%;border-radius:8px;object-fit:cover;max-height:220px;display:block;">
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 MANUFACTURA -->
+  <div class="card fade-in" id="manufactura">
+    <div class="card-header"><div class="card-title">Sistema de Inspección de Calidad y Detección de Fallas en Manufactura</div><span class="badge badge-dev">Desarrollado</span></div>
+    <p class="card-desc">Sistema de visión artificial para inspección automatizada de piezas en línea de producción. Detecta defectos, anomalías superficiales y desviaciones dimensionales con alta precisión, velocidad y trazabilidad completa por pieza.</p>
+    <div class="card-grid">
+      <div>
+        <div class="block-label">Técnicas &amp; Arquitecturas</div>
+        <ul class="tech-list">
+          <li>Detección de anomalías no supervisada entrenada sobre muestras conformes (one-class learning), eliminando la necesidad de grandes datasets de defectos etiquetados</li>
+          <li>Segmentación para localización y cuantificación del área afectada: porosidades, rebabas, grietas, deformaciones y marcas superficiales por clase</li>
+          <li>Calibración métrica del sistema óptico para medición dimensional en imagen con precisión sub-milimétrica y control de incertidumbre</li>
+          <li>Iluminación multiespectral y franja de luz estructurada para revelar defectos invisibles bajo condiciones de iluminación convencional</li>
+          <li>Inspección on-the-fly sincronizada con banda transportadora mediante trigger óptico sin interrupción de flujo productivo</li>
+          <li>Módulo SPC integrado: gráficos de control estadístico, índices Cp/Cpk, trazabilidad por lote y reportes de calidad exportables</li>
+        </ul>
+      </div>
+      <div>
+        <div class="block-label">Aplicaciones</div>
+        <div class="app-chips"><span class="app-chip">Manufactura automotriz</span><span class="app-chip">Aeroespacial</span><span class="app-chip">Metalmecánica</span><span class="app-chip">Electrónica</span></div>
+        <div class="block-label" style="margin-top:1rem">Imagen del sistema</div>
+        <img src="img/inspeccion-manufactura.jpg" alt="" style="width:100%;border-radius:8px;object-fit:cover;max-height:220px;display:block;">
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 RADAR ACÚSTICO -->
+  <div class="card fade-in" id="radar">
+    <div class="card-header"><div class="card-title">Sistema de Localización Acústica por Triangulación con IA</div><span class="badge badge-dev">Desarrollado</span></div>
+    <p class="card-desc">Sistema de detección y localización espacial de fuentes sonoras mediante arreglos de micrófonos distribuidos y procesamiento inteligente de señales. Estima en tiempo real la posición 2D/3D de un evento acústico sin requerir visibilidad directa del objetivo.</p>
+    <div class="card-grid">
+      <div>
+        <div class="block-label">Técnicas &amp; Arquitecturas</div>
+        <ul class="tech-list">
+          <li>Triangulación por diferencias de tiempo de arribo (TDOA) entre nodos del arreglo distribuido de sensores, con sincronización precisa de canales</li>
+          <li>Estimación de dirección de arribo (DOA) mediante beamforming adaptativo y algoritmos de alta resolución espectral (MUSIC, ESPRIT) para separación angular precisa en entornos ruidosos</li>
+          <li>Filtrado adaptativo y cancelación activa de ruido ambiental para operar en condiciones de alto nivel sonoro, reverberancia y fuentes interferentes</li>
+          <li>Clasificación de eventos acústicos mediante redes neuronales convolucionales entrenadas sobre espectrogramas tiempo-frecuencia (STFT / Mel-spectrogram)</li>
+          <li>Fusión de estimaciones multi-nodo con filtros de Kalman extendidos para seguimiento continuo y suavizado de trayectoria de la fuente en movimiento</li>
+          <li>Visualización en tiempo real sobre mapa topológico del área monitoreada con confianza estadística por estimación y log de eventos detectados</li>
+        </ul>
+      </div>
+      <div>
+        <div class="block-label">Aplicaciones</div>
+        <div class="app-chips"><span class="app-chip">Seguridad perimetral</span><span class="app-chip">Detección de disparos</span><span class="app-chip">Monitoreo industrial</span><span class="app-chip">Defensa y vigilancia</span><span class="app-chip">Detección de impactos</span></div>
+        <div class="block-label" style="margin-top:1rem">Imagen del sistema</div>
+        <img src="img/radar-acustico.jpeg" alt="" style="width:100%;border-radius:8px;object-fit:cover;max-height:220px;display:block;">
+      </div>
+    </div>
+  </div>
+
+  <!-- 6 TORRETA -->
+  <div class="card fade-in" id="torreta">
+    <div class="card-header"><div class="card-title">Sistema de Seguimiento por Torreta Estática con Visión Artificial</div><span class="badge badge-dev">Desarrollado</span></div>
+    <p class="card-desc">Plataforma de apuntado motorizada con visión embebida capaz de detectar, clasificar y seguir objetivos de forma autónoma sobre su campo de visión, con control de orientación en dos ejes y procesamiento a bordo en tiempo real.</p>
+    <div class="card-grid">
+      <div>
+        <div class="block-label">Técnicas &amp; Arquitecturas</div>
+        <ul class="tech-list">
+          <li>Detección y clasificación de objetivos mediante modelos de inferencia embebida optimizados por cuantización y poda de red para latencia mínima en hardware de campo</li>
+          <li>Seguimiento robusto ante pérdida temporal, oclusión parcial y cambios de escala mediante predicción de trayectoria por modelo cinemático adaptativo</li>
+          <li>Visual servoing en lazo cerrado: controlador PID con retroalimentación de error de centrado en imagen para orientación precisa en azimut y elevación</li>
+          <li>Estimación de distancia y ángulo sólido al objetivo mediante calibración estéreo o modelos monoculares de profundidad relativa</li>
+          <li>Lógica de priorización y selección de objetivo en escenas con múltiples detecciones simultáneas según criterios configurables</li>
+          <li>Interfaz de supervisión con overlay de tracking, ángulos actuales, estado de objetivo y control manual de override en tiempo real</li>
+        </ul>
+      </div>
+      <div>
+        <div class="block-label">Aplicaciones</div>
+        <div class="app-chips"><span class="app-chip">Vigilancia fija</span><span class="app-chip">Control de acceso</span><span class="app-chip">Seguridad perimetral</span><span class="app-chip">Defensa</span><span class="app-chip">Seguimiento autónomo</span></div>
+        <div class="block-label" style="margin-top:1rem">Imagen del sistema</div>
+        <img src="img/torreta-vision.jpeg" alt="" style="width:100%;border-radius:8px;object-fit:cover;max-height:220px;display:block;">
+      </div>
+    </div>
+  </div>
+
+  <!-- 7 LIDAR -->
+  <div class="card fade-in" id="lidar">
+    <div class="card-header"><div class="card-title">Sistema de Mapeo LiDAR-GPS Offline</div><span class="badge badge-dev">Desarrollado</span></div>
+    <p class="card-desc">Sistema autónomo de mapeo y localización simultáneos (SLAM) que fusiona datos LiDAR con posicionamiento de alta precisión para generar nubes de puntos y mapas métricos detallados, completamente operativo sin conectividad ni infraestructura externa.</p>
+    <div class="card-grid">
+      <div>
+        <div class="block-label">Técnicas &amp; Arquitecturas</div>
+        <ul class="tech-list">
+          <li>SLAM 3D basado en LiDAR: registro iterativo de nubes de puntos con alineación ICP y optimización de pose en grafo de factores para coherencia global del mapa</li>
+          <li>Fusión inercial-LiDAR-GPS mediante filtro de Kalman extendido o factor graph para corrección de deriva acumulada y georeferenciación métrica de alta precisión</li>
+          <li>Operación completamente offline: todo el procesamiento ocurre en unidad embebida de campo sin dependencia de conectividad, nube o servidores remotos</li>
+          <li>Generación de mapas de ocupación 2D y nubes de puntos 3D densas exportables en formatos estándar para integración con sistemas GIS</li>
+          <li>Segmentación y clasificación de elementos del entorno sobre la nube de puntos: estructuras, obstáculos y cambios topográficos en tiempo real</li>
+          <li>Detección de bucles de cierre (loop closure) para corrección de deriva acumulada en sesiones de mapeo prolongadas o de gran extensión</li>
+        </ul>
+      </div>
+      <div>
+        <div class="block-label">Aplicaciones</div>
+        <div class="app-chips"><span class="app-chip">Topografía de campo</span><span class="app-chip">Operaciones sin red</span><span class="app-chip">Robótica autónoma</span><span class="app-chip">Minería subterránea</span><span class="app-chip">Defensa y reconocimiento</span></div>
+        <div class="block-label" style="margin-top:1rem">Imagen del sistema</div>
+        <img src="img/mapeo-lidar.png" alt="" style="width:100%;border-radius:8px;object-fit:cover;max-height:220px;display:block;">
+      </div>
+    </div>
+  </div>
+
+  <!-- ALCANCES PROPUESTOS -->
+  <div class="sec-divider fade-in">
+    <h2>Alcances Propuestos</h2><div class="sec-divider-line"></div><span class="sec-count">05 desarrollos</span>
+  </div>
+
+  <!-- P1 AFORO -->
+  <div class="card proposed fade-in" id="aforo">
+    <div class="card-header"><div class="card-title">Sistema de Aforo y Análisis de Comportamiento en Espacios</div><span class="badge badge-prop">Propuesto</span></div>
+    <p class="card-desc">Conteo de personas, análisis de flujo peatonal, detección de aglomeraciones y comportamientos anómalos. Análisis de patrones sin almacenamiento de datos personales ni reconocimiento facial.</p>
+    <div class="card-grid">
+      <div>
+        <div class="block-label green">Técnicas &amp; Arquitecturas</div>
+        <ul class="tech-list">
+          <li>Tracking multi-persona con identidades anónimas por sesión, sin vinculación biométrica de ningún tipo</li>
+          <li>Análisis de trayectorias y generación de mapas de calor de densidad poblacional en tiempo real</li>
+          <li>Detección de eventos anómalos: permanencia inusual, contraflujo y aglomeración súbita por desviación del modelo esperado</li>
+          <li>Dashboard operativo con métricas en tiempo real e histórico para decisiones de seguridad y logística</li>
+        </ul>
+      </div>
+      <div>
+        <div class="block-label green">Aplicaciones</div>
+        <div class="app-chips"><span class="app-chip">Centros comerciales</span><span class="app-chip">Eventos masivos</span><span class="app-chip">Edificios corporativos</span><span class="app-chip">Transporte público</span></div>
+        <div class="block-label green" style="margin-top:1rem">Imagen referencial</div>
+        <img src="img/aforo-comportamiento.png" alt="" style="width:100%;border-radius:8px;object-fit:cover;max-height:220px;display:block;">
+      </div>
+    </div>
+  </div>
+
+  <!-- P2 RESIDUOS -->
+  <div class="card proposed fade-in" id="residuos">
+    <div class="card-header"><div class="card-title">Sistema de Clasificación de Residuos para Reciclaje Automatizado</div><span class="badge badge-prop">Propuesto</span></div>
+    <p class="card-desc">Visión artificial para identificar y clasificar materiales en banda transportadora o punto de acopio, integrable con actuadores de separación o señalización automática.</p>
+    <div class="card-grid">
+      <div>
+        <div class="block-label green">Técnicas &amp; Arquitecturas</div>
+        <ul class="tech-list">
+          <li>Clasificación multi-material mediante CNNs con análisis combinado de textura, morfología y color espectral sobre banda</li>
+          <li>Segmentación de instancias para separación de objetos traslapados con estimación de centroide para actuación</li>
+          <li>Integración con señales de control para accionamiento de actuadores de desvío con latencia de respuesta mínima</li>
+          <li>Estadísticas por categoría, volumen estimado y eficiencia operativa del proceso de separación</li>
+        </ul>
+      </div>
+      <div>
+        <div class="block-label green">Aplicaciones</div>
+        <div class="app-chips"><span class="app-chip">Plantas de reciclaje</span><span class="app-chip">Residuos industriales</span><span class="app-chip">Economía circular</span></div>
+        <div class="block-label green" style="margin-top:1rem">Imagen referencial</div>
+        <img src="img/clasificacion-residuos.png" alt="" style="width:100%;border-radius:8px;object-fit:cover;max-height:220px;display:block;">
+      </div>
+    </div>
+  </div>
+
+  <!-- P3 FATIGA -->
+  <div class="card proposed fade-in" id="fatiga">
+    <div class="card-header"><div class="card-title">Sistema de Monitoreo de Fatiga y Distracción en Operadores</div><span class="badge badge-prop">Propuesto</span></div>
+    <p class="card-desc">Detección en tiempo real de microsueño, distracción y niveles de fatiga mediante análisis facial no intrusivo, con alertas graduales y registro de eventos críticos.</p>
+    <div class="card-grid">
+      <div>
+        <div class="block-label green">Técnicas &amp; Arquitecturas</div>
+        <ul class="tech-list">
+          <li>Seguimiento de landmarks faciales para cálculo de métricas fisiológicas: PERCLOS, frecuencia de parpadeo, velocidad de cierre palpebral y orientación cefálica</li>
+          <li>Clasificación de estado cognitivo con modelos temporales (LSTM / Temporal CNN) que capturan la degradación progresiva de la atención</li>
+          <li>Alertas graduales: aviso preventivo, alerta activa y protocolo de parada según nivel de riesgo detectado</li>
+          <li>Operación robusta: iluminación nocturna, lentes, variaciones de postura y flujo de múltiples cámaras simultáneas</li>
+        </ul>
+      </div>
+      <div>
+        <div class="block-label green">Aplicaciones</div>
+        <div class="app-chips"><span class="app-chip">Transporte de carga</span><span class="app-chip">Minería</span><span class="app-chip">Maquinaria pesada</span><span class="app-chip">Seguridad vial</span></div>
+        <div class="block-label green" style="margin-top:1rem">Imagen referencial</div>
+        <img src="img/fatiga-operadores.png" alt="" style="width:100%;border-radius:8px;object-fit:cover;max-height:220px;display:block;">
+      </div>
+    </div>
+  </div>
+
+  <!-- P4 INVENTARIO -->
+  <div class="card proposed fade-in" id="inventario">
+    <div class="card-header"><div class="card-title">Sistema de Inventario Visual Automatizado</div><span class="badge badge-prop">Propuesto</span></div>
+    <p class="card-desc">Reconocimiento y conteo automático de productos, materiales o activos mediante cámaras fijas o móviles, integrable con sistemas ERP o bases de datos del cliente.</p>
+    <div class="card-grid">
+      <div>
+        <div class="block-label green">Técnicas &amp; Arquitecturas</div>
+        <ul class="tech-list">
+          <li>Detección y conteo de instancias con modelos fine-tuned sobre catálogo de productos del cliente mediante transfer learning</li>
+          <li>Lectura automática de códigos, etiquetas y marcas de identificación para registro sin contacto físico</li>
+          <li>Reconciliación automática entre inventario visual y registros digitales con alertas por discrepancia o faltante</li>
+          <li>API de integración con sistemas ERP, WMS o bases de datos propietarias del cliente para actualización en tiempo real</li>
+        </ul>
+      </div>
+      <div>
+        <div class="block-label green">Aplicaciones</div>
+        <div class="app-chips"><span class="app-chip">Bodegas y almacenes</span><span class="app-chip">Retail</span><span class="app-chip">Control de activos</span></div>
+        <div class="block-label green" style="margin-top:1rem">Imagen referencial</div>
+        <img src="img/inventario-visual.png" alt="" style="width:100%;border-radius:8px;object-fit:cover;max-height:220px;display:block;">
+      </div>
+    </div>
+  </div>
+
+  <!-- P5 GEMELO -->
+  <div class="card proposed fade-in" id="gemelo">
+    <div class="card-header"><div class="card-title">Gemelo Digital con Monitoreo por Visión Artificial</div><span class="badge badge-prop">Propuesto</span></div>
+    <p class="card-desc">Integración de sensores visuales con modelos digitales de planta o instalación para monitoreo continuo del estado físico versus el estado esperado, con alertas automáticas por desviación.</p>
+    <div class="card-grid">
+      <div>
+        <div class="block-label green">Técnicas &amp; Arquitecturas</div>
+        <ul class="tech-list">
+          <li>Fusión de datos de visión con modelos CAD/BIM para comparación continua estado real vs. modelo de referencia actualizado</li>
+          <li>Detección de cambios por análisis diferencial temporal de escenas industriales con umbral adaptativo (change detection)</li>
+          <li>Visualización 3D interactiva con marcado automático de zonas de desviación, falla o intervención requerida</li>
+          <li>Integración con plataformas SCADA para gestión centralizada del estado de la planta en tiempo real</li>
+        </ul>
+      </div>
+      <div>
+        <div class="block-label green">Aplicaciones</div>
+        <div class="app-chips"><span class="app-chip">Industria 4.0</span><span class="app-chip">Mantenimiento predictivo</span><span class="app-chip">Manufactura y energía</span></div>
+        <div class="block-label green" style="margin-top:1rem">Imagen referencial</div>
+        <img src="img/gemelo-digital.png" alt="" style="width:100%;border-radius:8px;object-fit:cover;max-height:220px;display:block;">
+      </div>
+    </div>
+  </div>
+
+  <!-- MODELO DE DESARROLLO -->
+  <div class="sec-divider fade-in" id="modelo">
+    <h2>Modelo de Desarrollo</h2><div class="sec-divider-line"></div>
+  </div>
+  <div class="steps-grid fade-in">
+    <div class="step-card"><div class="step-num">01</div><div class="step-name">Diagnóstico</div><p class="step-desc">Análisis del problema, entorno operativo y restricciones del cliente.</p></div>
+    <div class="step-card"><div class="step-num">02</div><div class="step-name">Propuesta Técnica</div><p class="step-desc">Definición de arquitectura, hardware, algoritmos y alcance entregable.</p></div>
+    <div class="step-card"><div class="step-num">03</div><div class="step-name">Prototipado</div><p class="step-desc">Desarrollo de MVP funcional para validación en condiciones reales de campo.</p></div>
+    <div class="step-card"><div class="step-num">04</div><div class="step-name">Implementación</div><p class="step-desc">Despliegue, ajuste fino y entrega del sistema completo operativo.</p></div>
+    <div class="step-card"><div class="step-num">05</div><div class="step-name">Soporte</div><p class="step-desc">Acompañamiento post-entrega, actualizaciones y escalabilidad del sistema.</p></div>
+  </div>
+
+  <!-- CONTACTO -->
+  <div class="sec-divider fade-in" id="contacto">
+    <h2>Contacto</h2><div class="sec-divider-line"></div>
+  </div>
+  <div class="contact-hero fade-in">
+    <div class="contact-top">
+      <h2>¿Tienes un proyecto en mente?</h2>
+      <p>Escríbenos o llámanos — respondemos a la brevedad.</p>
+    </div>
+    <div class="contact-btns">
+      <a class="btn btn-wa" href="https://wa.me/525513741169" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.13.558 4.13 1.532 5.867L.054 23.945a.5.5 0 0 0 .609.61l6.116-1.476A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 0 1-5.032-1.387l-.36-.214-3.731.9.933-3.618-.235-.372A9.816 9.816 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+        WhatsApp · 55 1374 1169
+      </a>
+      <a class="btn btn-tel" href="tel:+525513741169">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.57a16 16 0 0 0 6.29 6.29l.94-.94a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Llamar
+      </a>
+      <a class="btn btn-mail" href="/cdn-cgi/l/email-protection#c8a9aaada4bea1a4a4a9ffff88a0a7bca5a9a1a4e6aba7a5">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+        <span class="__cf_email__" data-cfemail="e9888b8c859f80858588dedea981869d84888085c78a8684">[email&#160;protected]</span>
+      </a>
+    </div>
+  </div>
+
+  <footer><p>Catálogo de Servicios · Ingeniería en IA &amp; Visión Artificial · 2025</p></footer>
+
+</div>
+</main>
+
+<script>
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+const sections = [...navLinks].map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+function updateNav() {
+  let current = sections[0];
+  sections.forEach(sec => { if (window.scroll
